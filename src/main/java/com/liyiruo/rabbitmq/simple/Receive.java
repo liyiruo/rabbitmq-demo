@@ -33,6 +33,11 @@ public class Receive {
         };
         //监听队列
         channel.basicConsume(QUEUE_NAME, true, defaultConsumer);
+
+        //发送的时候 发送完了 就结束了，但是接受的时候不需要关闭。
+        /*channel.close();
+        connection.close();*/
+
     }
 
 
