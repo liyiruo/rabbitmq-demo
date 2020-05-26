@@ -15,7 +15,6 @@ public class Send {
         Channel channel = connection.createChannel();
         //声明交换机  交换机的名字和类型
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-
        /* for (int i = 0; i < 50; i++) {
             //定义消息
             String msg = "fanout_message=>" + i;
