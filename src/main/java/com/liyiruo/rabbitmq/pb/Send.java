@@ -26,9 +26,10 @@ public class Send {
 
 
         String msg = "this is send";
-        System.out.println(msg);
+
         //发送消息
         channel.basicPublish(EXCHANGE_NAME, "", null, msg.getBytes());
+        System.out.println(msg);
         channel.close();
         connection.close();
     }
