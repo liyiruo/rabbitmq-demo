@@ -15,20 +15,19 @@ public class Send {
         Channel channel = connection.createChannel();
         //声明交换机  交换机的名字和类型
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-       /* for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 50; i++) {
             //定义消息
             String msg = "fanout_message=>" + i;
             System.out.println(msg);
             //发送消息
             channel.basicPublish(EXCHANGE_NAME, "", null, msg.getBytes());
         }
-        */
 
 
-        String msg = "this is send";
+        /*String msg = "this is send";
         System.out.println(msg);
         //发送消息
-        channel.basicPublish(EXCHANGE_NAME, "", null, msg.getBytes());
+        channel.basicPublish(EXCHANGE_NAME, "", null, msg.getBytes());*/
         channel.close();
         connection.close();
     }

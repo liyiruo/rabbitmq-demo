@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 public class Reveice1 {
-    private static final String QUEUE_NAME = "test_queue_fanout_email_Reveice1";
+    private static final String QUEUE_NAME = "test_queue_fanout_email";
     private static final String EXCHANGE_NAME = "test_exchange_fanout";
-
     public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectUtil.getConnection();
         Channel channel = connection.createChannel();
@@ -24,7 +23,7 @@ public class Reveice1 {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String msg = new String(body, "utf-8");
-                System.out.println("消费者1=>" + msg);
+                System.out.println("Reveice1=>" + msg);
                 //休眠2秒
                 try {
                     Thread.sleep(3000);

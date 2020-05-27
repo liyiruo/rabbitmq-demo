@@ -19,10 +19,10 @@ public class ConnectUtil {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("127.0.0.1");
         factory.setPort(5672);
-        factory.setVirtualHost("/");
+        factory.setVirtualHost("/liyiruo");
 
-        factory.setUsername("guest");
-        factory.setPassword("guest");
+        factory.setUsername("liyiruo");
+        factory.setPassword("liyiruo");
         return factory.newConnection();
     }
 }
