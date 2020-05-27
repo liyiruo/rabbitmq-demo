@@ -42,3 +42,26 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: channel error; protocol 
 ```
 需要手动的在：
 `http://localhost:15672/#/exchanges/%2Fliyiruo/test_exchange_fanout`上，手动绑定，然后注释掉报错代码，然后可以正常发送和接收；
+
+
+
+
+
+routing 模式：
+
+发送：channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+     channel.basicPublish(EXCHANGE_NAME,"error",null,msg.getBytes());
+接收：
+绑定交换机
+channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "error");
+
+topic模式：
+发送：
+声明交换机
+channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+channel.basicPublish(EXCHANGE_NAME,,"good.add",null,msg.getBytes());
+         
+接收：
+绑定的时候 可以设置通配符
+channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "goods.#");
+
