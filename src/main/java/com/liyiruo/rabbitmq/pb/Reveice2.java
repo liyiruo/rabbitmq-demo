@@ -15,7 +15,7 @@ public class Reveice2 {
         //队列声明
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         //绑定队列到交换机
-        //channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "");
         channel.basicQos(1);//保证一次只分发一个
         DefaultConsumer defaultConsumer=new DefaultConsumer(channel){
             @Override

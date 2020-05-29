@@ -12,11 +12,11 @@ public class Revice2 {
     public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectUtil.getConnection();
         Channel channel = connection.createChannel();
-        channel.queueDeclare(EXCHANGE_NAME, false, false, false, null);
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);//这一行错了吗？
         channel.basicQos(1);
-        channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "error");//这行代码报错了啊
-        channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "info");
-        channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "warning");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "error");//这行代码报错了啊
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "info");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "warning");
 
         DefaultConsumer defaultConsumer = new DefaultConsumer(channel) {
             @Override
@@ -35,7 +35,5 @@ public class Revice2 {
 
         boolean autoAck=false;
         channel.basicConsume(QUEUE_NAME, autoAck, defaultConsumer);
-
-
     }
 }
