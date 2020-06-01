@@ -17,7 +17,7 @@ public class Send1 {
         //生产者调用 confirmSelect  将channel 设置为confirm 模式
         channel.confirmSelect();
         String msg = "hello configrm1";
-        channel.basicPublish("","QUEUE_NAME",null,msg.getBytes());
+        channel.basicPublish("",QUEUE_NAME,null,msg.getBytes());//QUEUE_NAME写在了“”里面
 
         if (!channel.waitForConfirms()) {
             System.out.println("message send is failed");

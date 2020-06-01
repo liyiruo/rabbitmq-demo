@@ -20,7 +20,7 @@ public class Send2 {
         channel.confirmSelect();
         String msg = "hello confirm1";
         for (int i = 0; i < 10; i++) {
-            channel.basicPublish("", "QUEUE_NAME", null, msg.getBytes());
+            channel.basicPublish("", QUEUE_NAME, null, msg.getBytes());
             log.info("msg==>{}",msg);
         }
 
