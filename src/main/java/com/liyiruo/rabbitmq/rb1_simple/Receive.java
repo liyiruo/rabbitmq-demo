@@ -1,6 +1,6 @@
-package com.liyiruo.rabbitmq.simple;
+package com.liyiruo.rabbitmq.rb1_simple;
 
-import com.liyiruo.rabbitmq.util.ConnectUtil;
+import com.liyiruo.rabbitmq.rb0_util.ConnectUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;

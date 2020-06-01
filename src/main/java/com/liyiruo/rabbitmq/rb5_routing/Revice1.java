@@ -1,38 +1,38 @@
-package com.liyiruo.rabbitmq.work;
+package com.liyiruo.rabbitmq.rb5_routing;
 
-import com.liyiruo.rabbitmq.util.ConnectUtil;
+import com.liyiruo.rabbitmq.rb0_util.ConnectUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class Receive1 {
-    private static final String QUEUE_NAME = "test_work_queue";
-    public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
-        newApi();
-    }
-    private static void newApi() throws IOException, TimeoutException, InterruptedException {
-        //获取连接
+public class Revice1 {
+    private static final String EXCHANGE_NAME = "test_exchange_direct";
+    private static final String QUEUE_NAME = "test_queue_direct1";
+    public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectUtil.getConnection();
-        //获取channel
         Channel channel = connection.createChannel();
-        //声明队列
+        //这个地方写错了 声明队列  中的参数写成了交换机
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        //定义一个消费者
+        channel.basicQos(1);
+        //queueBind 写成了exechangeBind
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "error");
+
         DefaultConsumer defaultConsumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String msg = new String(body, "utf-8");
-                System.out.println("消费者1=>" + msg);
-                //休眠2秒
+                System.out.println(msg);
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }finally {
+                    channel.basicAck(envelope.getDeliveryTag(),false);
                 }
             }
         };
-        boolean autoAck = true;
+        boolean autoAck=false;
         channel.basicConsume(QUEUE_NAME, autoAck, defaultConsumer);
     }
 }

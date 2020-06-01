@@ -1,4 +1,4 @@
-package com.liyiruo.rabbitmq.util;
+package com.liyiruo.rabbitmq.rb0_util;
 
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
