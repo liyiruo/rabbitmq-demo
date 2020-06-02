@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 @Slf4j
 public class Revecive1 {
 
-    private static final String QUEUE_NAME = "test_queue_configrm1";
+    private static final String QUEUE_NAME = "test_queue_configrm5";
     public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectUtil.getConnection();
         Channel channel = connection.createChannel();
@@ -18,7 +18,6 @@ public class Revecive1 {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String msg = new String(body, "UTF-8");
-                log.info("=====");
                 System.out.println("msg==>" + msg);
             }
         };

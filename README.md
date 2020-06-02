@@ -1,10 +1,21 @@
 # rabbitmq-demo
 
-## 简单模式
-- 一对一的消息接收和发送
-
 [https://www.rabbitmq.com/getstarted.html](https://www.rabbitmq.com/getstarted.html)
 
+## 简单模式
+- 一对一的消息发送
+`channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+ String message = "Hello World!";
+ channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+ System.out.println(" [x] Sent '" + message + "'");`
+- 接收
+` channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+     System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+     DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+         String message = new String(delivery.getBody(), "UTF-8");
+         System.out.println(" [x] Received '" + message + "'");
+     };
+     channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });`
 ## work 工作模式
 - 一个任务 轮流着给 多个消息消费者，每个消费者 依次获取到消息
 ## work fair公平模式
@@ -12,6 +23,9 @@
 ## 订阅模式
 订阅模式有问题：
 `channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "");`
+
+> 接收的时候 没有exchangeBind(),改为：`channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "");`
+
 在消费者代码里的第18行；一直报错
 ```bash
 Exception in thread "main" java.io.IOException
@@ -55,6 +69,8 @@ routing 模式：
 绑定交换机
 channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "error");
 
+> 找到问题了，应该是 channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "error");
+
 topic模式：
 发送：
 声明交换机
@@ -64,4 +80,9 @@ channel.basicPublish(EXCHANGE_NAME,,"good.add",null,msg.getBytes());
 接收：
 绑定的时候 可以设置通配符
 channel.exchangeBind(QUEUE_NAME, EXCHANGE_NAME, "goods.#");
+
+> 修改为：channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "goods.#");
+
+
+
 
